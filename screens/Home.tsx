@@ -8,18 +8,18 @@ const Home = ({ navigation }: { navigation: any }) => {
   return (
     <View style={globalStyles.container}>
       {/* User Icon Button */}
-      <TouchableOpacity style= {styles.userIconContainer} onPress={() => {navigation.navigate('Profile')}}>
+      {/* <TouchableOpacity style= {styles.userIconContainer} onPress={() => {navigation.navigate('Profile')}}>
         <Icon name="user-circle-o" size={20} color="black" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <Text style={{fontSize:50}}>Motion APP</Text>
-      <Button
+      {/* <Button
                 title="Register"
                 onPress={() => navigation.navigate('Register')}
             />
             <Button
                 title="Login"
                 onPress={() => navigation.navigate('Login')}
-            />
+            /> */}
     </View>
   );
 };

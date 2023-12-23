@@ -37,7 +37,6 @@ const Register = ({ navigation }: { navigation: any }) => {
         setLoading(true);
         try {
             const response = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
-
             // Update user's display name in Firebase
             await updateProfile(response.user, {
                 displayName: username,
@@ -58,8 +57,7 @@ const Register = ({ navigation }: { navigation: any }) => {
             <TextInput
                 style={registerStyles.input}
                 onChangeText={(text) => setUserName(text)}
-                placeholder="Username"
-                
+                placeholder="Username"  
             />
             <TextInput
                 style={registerStyles.input}
@@ -67,9 +65,6 @@ const Register = ({ navigation }: { navigation: any }) => {
                 placeholder="Email"
                 keyboardType='email-address'
                 autoComplete='email'
-
-                
-
             />
             <TextInput
                 style={registerStyles.input}
