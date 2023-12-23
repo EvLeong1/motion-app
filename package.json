@@ -1,0 +1,42 @@
+{
+  "name": "motionapp",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "start-server": "node server.ts"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/native-stack": "^6.9.17",
+    "axios": "^1.6.2",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "expo": "~49.0.15",
+    "expo-status-bar": "~1.6.0",
+    "express": "^4.18.2",
+    "firebase": "^10.7.1",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.3",
+    "react": "18.2.0",
+    "react-native": "0.72.6",
+    "react-native-safe-area-context": "4.6.3",
+    "react-native-screens": "~3.22.0",
+    "react-native-vector-icons": "^10.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/body-parser": "^1.19.5",
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.10.5",
+    "@types/react": "~18.2.14",
+    "@types/react-native-vector-icons": "^6.4.18",
+    "typescript": "^5.1.3"
+  },
+  "private": true
+}
