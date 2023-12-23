@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from 'axios';
 import { FIREBASE_AUTH } from '../FirebaseConfig';
-import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from '@firebase/auth';
 
 const Register = ({ navigation }: { navigation: any }) => {
     
@@ -19,9 +19,30 @@ const Register = ({ navigation }: { navigation: any }) => {
     const auth = FIREBASE_AUTH;
 
     const register = async () => {
+
+        if (!username.trim()) {
+            Alert.alert('Error', 'Please enter a username.');
+            return;
+        }
+
+        if (!email.trim()) {
+            Alert.alert('Error', 'Please enter a valid email.');
+            return;
+        }
+        if (!password.trim()) {
+            Alert.alert('Error', 'Please enter a valid password.');
+            return;
+        }
+
         setLoading(true);
         try {
             const response = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+
+            // Update user's display name in Firebase
+            await updateProfile(response.user, {
+                displayName: username,
+            });
+
             console.log(response);
         } catch (error: any) {
             console.log(error);
@@ -38,6 +59,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                 style={registerStyles.input}
                 onChangeText={(text) => setUserName(text)}
                 placeholder="Username"
+                
             />
             <TextInput
                 style={registerStyles.input}
@@ -45,6 +67,9 @@ const Register = ({ navigation }: { navigation: any }) => {
                 placeholder="Email"
                 keyboardType='email-address'
                 autoComplete='email'
+
+                
+
             />
             <TextInput
                 style={registerStyles.input}
