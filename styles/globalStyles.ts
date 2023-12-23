@@ -3,9 +3,10 @@ import { StyleSheet } from 'react-native'
 export const globalStyles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      padding: 10,
+      backgroundColor: '#546A7B',
       alignItems: 'center',
-      justifyContent: 'center',
+    //   justifyContent: 'center',
     },
 
     input: {

@@ -6,21 +6,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Home = ({ navigation }: { navigation: any }) => {
   return (
-    <View style={globalStyles.container}>
+    <SafeAreaView style={globalStyles.container}>
       {/* User Icon Button */}
       {/* <TouchableOpacity style= {styles.userIconContainer} onPress={() => {navigation.navigate('Profile')}}>
         <Icon name="user-circle-o" size={20} color="black" />
       </TouchableOpacity> */}
-      <Text style={{fontSize:50}}>Motion APP</Text>
-      {/* <Button
-                title="Register"
-                onPress={() => navigation.navigate('Register')}
-            />
-            <Button
-                title="Login"
-                onPress={() => navigation.navigate('Login')}
-            /> */}
-    </View>
+      <Text style={{fontSize:50, color:'white'}}>Motion APP</Text>
+      <Text style={{fontSize:30, color:'white'}}>Welcome to Motion</Text>
+    </SafeAreaView>
   );
 };
 
