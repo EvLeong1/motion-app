@@ -1,10 +1,13 @@
 import { StyleSheet } from 'react-native'
+import { colors } from './colors';
+
 
 export const globalStyles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 10,
-      backgroundColor: '#546A7B',
+    //   backgroundColor: '#D0E3CC',
+    backgroundColor: colors.background,
       alignItems: 'center',
     //   justifyContent: 'center',
     },
@@ -46,8 +49,7 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
-        // justifyContent: '',
-        gap: 10,
+        gap: 20,
       },
 
       input: {
@@ -82,7 +84,7 @@ export const globalStyles = StyleSheet.create({
         color: 'white',
     },
     link: {
-        fontSize: 10,
+        fontSize: 15,
         color: '#8898FF',
         
     },

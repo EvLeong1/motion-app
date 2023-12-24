@@ -39,7 +39,7 @@ const ViewParks = () => {
       </View>
       <View>
         <Text>ViewParks</Text>
-        {/* Your other content goes here */}
+        {/* add other stuff here */}
       </View>
     </View>
   );

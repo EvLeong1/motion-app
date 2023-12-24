@@ -18,6 +18,7 @@ import AddReview from './screens/AddReview';
 import Profile from './screens/Profile';
 import ViewParks from './screens/ViewParks';
 import { FIREBASE_AUTH } from './FirebaseConfig';
+import { colors } from './styles/colors';
 
 
 const Tab = createBottomTabNavigator();
@@ -27,17 +28,17 @@ const Stack = createNativeStackNavigator();
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={({ route }) => ({
       
-      tabBarActiveTintColor: '#E4C3AD',
-      tabBarInactiveTintColor: '#9EA3B0',
+      tabBarActiveTintColor: colors.tabBarActiveTintColor,
+      tabBarInactiveTintColor: colors.tabBarInactiveTintColor,
       tabBarLabelStyle: {fontSize: 12},
       tabBarStyle: {
-        height: 90,
+        height: 80,
         paddingHorizontal: 5,
         paddingTop: 0,
-        backgroundColor: '#0D1F2D',
+        backgroundColor: colors.tabBar,
         position: 'absolute',
-        borderTopWidth: 2,
-        borderTopColor: '#9EA3B0',
+        borderTopWidth: 0.5,
+        borderTopColor: 'gray',
     },
       
     })}>

@@ -19,6 +19,7 @@ const Login = ({ navigation }: { navigation: any }) => {
       setLoading(true);
       
       try {
+          //successful login will navigate to home screen
           const response = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
           let toast = Toast.show("Login Successful", {
             duration: Toast.durations.SHORT,
@@ -33,7 +34,6 @@ const Login = ({ navigation }: { navigation: any }) => {
 
           // Navigate to the home screen
           navigation.navigate('Home');
-          
           
           // console.log(response);
       } catch (error: any) {
@@ -50,9 +50,9 @@ const Login = ({ navigation }: { navigation: any }) => {
             animation: true,
             hideOnPress: true,
             backgroundColor: '#F95555',
-            containerStyle: { marginBottom: 55 } // Adjust the marginBottom to move the Toast above the tab bar
+            containerStyle: { marginBottom: 55 }
 
-            
+  
           });
           
           // You can manually hide the Toast, or it will automatically disappear after a `duration` ms timeout.
@@ -94,6 +94,9 @@ const Login = ({ navigation }: { navigation: any }) => {
 
       <Pressable style = {{marginTop:'4%'}}onPress={() => navigation.navigate('Register')}>
         <Text style={registerStyles.link}>Don't have an account? Register</Text>
+      </Pressable> 
+      <Pressable style = {{marginTop:'4%'}}>
+        <Text style={registerStyles.link}>Forgot Password?</Text>
       </Pressable> 
       
     </SafeAreaView>
