@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native'
 import React from 'react'
 import { globalStyles } from '../styles/globalStyles'
 import { SafeAreaView, StyleSheet, TextInput, Button, Alert, Pressable } from 'react-native';
@@ -6,19 +6,21 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors } from '../styles/colors';
 // import pic from '../assets/4x.webp';
 
+
+
 const Home = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={globalStyles.container}>
-      {/* User Icon Button */}
-      {/* <TouchableOpacity style= {styles.userIconContainer} onPress={() => {navigation.navigate('Profile')}}>
-        <Icon name="user-circle-o" size={20} color="black" />
-      </TouchableOpacity> */}
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Motion APP</Text>
-        <Text style={{ fontSize: 30, color: 'black' }}>Welcome to Motion</Text>
-      </View>
-      <Image style={{width: 200, height: 200, borderRadius: 20}} source={{uri:'https://media1.tenor.com/m/u28GHpki8VgAAAAd/cat-walking.gif'}} />
-      
+      <ScrollView>
+        <View style={globalStyles.scrollView}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>Motion APP</Text>
+            <Text style={{ fontSize: 30, color: 'black' }}>Welcome to Motion</Text>
+          </View>
+          <Image style={{width: 200, height: 200, borderRadius: 20}} source={{uri:'https://media1.tenor.com/m/u28GHpki8VgAAAAd/cat-walking.gif'}} />
+          
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

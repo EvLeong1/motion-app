@@ -5,12 +5,19 @@ import { colors } from './colors';
 export const globalStyles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 10,
+    //   padding: 10,
     //   backgroundColor: '#D0E3CC',
     backgroundColor: colors.background,
-      alignItems: 'center',
+    //   alignItems: 'center',
     //   justifyContent: 'center',
     },
+    scrollView: {
+        // backgroundColor: colors.background,
+        alignItems: 'center',
+        // justifyContent: 'center',
+        marginHorizontal: 20,
+        paddingBottom: 200,
+      },
 
     input: {
         height: 40,
