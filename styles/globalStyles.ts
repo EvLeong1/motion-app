@@ -96,3 +96,33 @@ export const globalStyles = StyleSheet.create({
         
     },
   });
+
+  export const viewParks = StyleSheet.create({
+    container: {
+        display:'flex',
+        backgroundColor: colors.background,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+    },
+    parkBoxContainer:
+    {
+      width: "100%", 
+      alignItems:"center",
+      gap: 20,
+  },
+
+    parkBox: {
+        display:'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        // justifyContent: 'space-',
+
+        padding: 10,
+        borderColor: 'darkgray',
+        borderWidth: 1,
+        borderRadius: 12,
+        width: '95%',
+        // height: 150,
+    },
+});
