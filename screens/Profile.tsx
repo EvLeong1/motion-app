@@ -8,6 +8,8 @@ import Register from './Register';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { MaterialIcons } from '@expo/vector-icons';
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,6 +75,7 @@ const styles = StyleSheet.create({
 const Profile = ({ navigation }: { navigation: any }) => {
   const [user, setUser] = useState<User | null>(null);
   const [photoURL, setPhotoURL] = useState<string | null>(null);
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {

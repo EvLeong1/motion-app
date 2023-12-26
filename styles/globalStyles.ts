@@ -99,30 +99,57 @@ export const globalStyles = StyleSheet.create({
 
   export const viewParks = StyleSheet.create({
     container: {
-        display:'flex',
         backgroundColor: colors.background,
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
+        marginTop: 20,
+        gap: 20,
+        paddingBottom: 100,
     },
-    parkBoxContainer:
-    {
-      width: "100%", 
-      alignItems:"center",
-      gap: 20,
+    loadingContainer:{
+     
+      width: '100%',
+      paddingTop: 50,
+      color:'black',
+    
+    },
+    parkBox: {
+      // display:'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 10,
+      borderColor: 'darkgray',
+      borderWidth: 1,
+      borderRadius: 20,
+      width: '95%',
+      backgroundColor: 'white',
+      gap: 15
+      // height: 150,
   },
 
-    parkBox: {
+    textContainer: {
         display:'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        // justifyContent: 'space-',
-
-        padding: 10,
-        borderColor: 'darkgray',
-        borderWidth: 1,
-        borderRadius: 12,
-        width: '95%',
-        // height: 150,
+        // justifyContent: 'space-evenly',
+        gap: 5,
+    
+    }, 
+    title:{
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
     },
+    location:{
+        fontSize: 10,
+        fontStyle: 'italic',
+        color: 'black',
+    },
+    
+    image:{
+      width: 100, 
+      height: 100, 
+      borderRadius: 20, 
+      borderColor: 'black', 
+      borderWidth: 1
+    }
 });

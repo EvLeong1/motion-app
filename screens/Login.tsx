@@ -4,6 +4,7 @@ import { globalStyles, registerStyles } from '../styles/globalStyles'
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import Toast from 'react-native-root-toast';
+import { useNavigation } from '@react-navigation/native';
 
 import { FIREBASE_AUTH } from '../FirebaseConfig';
 
@@ -13,6 +14,14 @@ const Login = ({ navigation }: { navigation: any }) => {
   const [password, setPassword] = React.useState('');
 
   const [loading, setLoading] = React.useState(false);
+  
+  // const navi = useNavigation();
+
+  // React.useLayoutEffect(() => {
+  //   navi.setOptions({
+  //     headerLargeTitle: true,
+  //   });
+  // }, [navi]);
 
   const login = async () => {
     Keyboard.dismiss();

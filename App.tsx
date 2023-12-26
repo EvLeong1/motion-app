@@ -23,6 +23,13 @@ import { colors } from './styles/colors';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator(); 
+const ViewParksStack = createNativeStackNavigator();
+
+const ViewParksStackNavigator = () => (
+  <ViewParksStack.Navigator>
+    <ViewParksStack.Screen name="View Parks" component={ViewParks} />
+  </ViewParksStack.Navigator>
+)
 
  function TabBar () {
   return (
@@ -51,12 +58,14 @@ const Stack = createNativeStackNavigator();
               headerShown: false,
             }}
           />
-          <Tab.Screen name="View Parks" component={ViewParks}  
+          <Tab.Screen name="ViewParks" component={ViewParksStackNavigator}  
           options={{
             tabBarLabel: 'View Parks',
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="park" color={color} size={size} />
               ),
+              headerShown: false,
+              
               
               
             }}
@@ -69,6 +78,7 @@ const Stack = createNativeStackNavigator();
               ),
             }}
           />
+         
           
         </Tab.Navigator>
   );
@@ -79,7 +89,7 @@ export default function App() {
 
   React.useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      console.log(user?.email);
+      // console.log(user?.email);
     });
   }, []);
 
