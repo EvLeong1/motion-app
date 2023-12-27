@@ -78,6 +78,8 @@ const Register = ({ navigation }: { navigation: any }) => {
                 displayName: username,
                 email: email,
                 photoURL: null,
+                bio: null,
+                rating: null,
               });
 
               let toast = Toast.show("Registration Successful", {

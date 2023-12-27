@@ -1,86 +1,45 @@
-import { View, Text, Button, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Button, Image, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { User, onAuthStateChanged, signOut } from 'firebase/auth';
-import { FIREBASE_AUTH } from '../FirebaseConfig';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from './Login';
-import Register from './Register';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../FirebaseConfig';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { ViewProfile } from '../styles/globalStyles';
 import { MaterialIcons } from '@expo/vector-icons';
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  profileContainer: {
-    alignItems: 'center',
-    // borderWidth: 1,
-    // borderColor: '#ccc',
-    padding: 20,
-    borderRadius: 10,
-    marginBottom: 20,
-    width: '100%',
-    gap: 20,
-  },
-  photo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    
-  },
-  addPhotoButton: {
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 50,
-    padding: 20,
-    color: '#ccc',
-    backgroundColor: '#ccc',
-  },
-  
-  descriptor: {
-    fontSize: 15,
-    color: 'black',
-    fontStyle: 'italic',
-    // textDecorationLine: 'underline',
-    
-  },
-  text: {
-    fontWeight: 'bold',
-    fontSize: 20,
-  },
-  signInContainer: {
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 20,
-    borderRadius: 10,
-  },
-  boxContainer: {
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 20,
-    borderRadius: 10,
-    width: '100%',
-    gap: 5,
-  },
-});
 
 const Profile = ({ navigation }: { navigation: any }) => {
   const [user, setUser] = useState<User | null>(null);
   const [photoURL, setPhotoURL] = useState<string | null>(null);
+  const [userDoc, setUserDoc] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
+  const usersDB = collection(FIREBASE_DB, 'users');
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
       setUser(user);
       setPhotoURL(user?.photoURL || null);
+
+      // Check if the user is logged in
+      if (user) {
+        try {
+          const q = query(usersDB, where('email', '==', user.email));
+          const querySnapshot = await getDocs(q);
+
+          if (!querySnapshot.empty) {
+            const uDoc = querySnapshot.docs[0].data();
+            setUserDoc(uDoc);
+            console.log('User Document:', uDoc);
+          } else {
+            console.log('User document not found');
+          }
+        } catch (error) {
+          console.error('Error retrieving user document:', error);
+        } finally {
+          setLoading(false); // Set loading to false regardless of success or failure
+        }
+      } else {
+        setLoading(false); // Set loading to false if the user is not logged in
+      }
     });
 
     return () => unsubscribe();
@@ -96,40 +55,65 @@ const Profile = ({ navigation }: { navigation: any }) => {
 
   const handleAddPhotoPress = () => {
     console.log('Add photo clicked!');
+    console.log(userDoc);
   };
 
-  return (
-    <View style={styles.container}>
-      {user ? (
-        // If user is logged in, display the following
-        <View style={styles.profileContainer}>
-          {user.photoURL ? (
-            <Image source={{ uri: user.photoURL }} style={styles.photo} />
-          ) : (
-            <TouchableOpacity onPress={handleAddPhotoPress} style={styles.addPhotoButton}>
-              <MaterialIcons name="add-photo-alternate" size={50} color="black" />
-            </TouchableOpacity>
-          )}
-          <View style={styles.boxContainer}>
-            <Text style={styles.descriptor}>Username</Text>
-            <Text style={styles.text}>{user.displayName}</Text>
-          </View>
-          <View style={styles.boxContainer}>
-            <Text style={styles.descriptor}>Email</Text>
-            <Text style={styles.text}>{user.email}</Text>
-          </View>
+  const loadUser = async () => {
+    console.log("in load: "+userDoc);
+  }
 
-          <Button title="Sign Out" onPress={SignOut} />
-          
-        </View>
-      ) : (
-        // If user is not logged in, display the following
-        <View style={styles.signInContainer}>
-          <Text>Please sign in to view your profile</Text>
-          <Button title="Sign In" onPress={() => navigation.navigate('Login')} />
-        </View>
-      )}
-    </View>
+  if (loading) {
+    // Display a loading indicator while the data is being fetched
+    return (
+      <View style={ViewProfile.container}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView>
+      <View style={ViewProfile.container}>
+        {user ? (
+          // If the user is logged in, display the following
+          <View style={ViewProfile.profileContainer}>
+            {user.photoURL ? (
+              <Image source={{ uri: user.photoURL }} style={ViewProfile.photo} />
+            ) : (
+              <TouchableOpacity onPress={handleAddPhotoPress} style={ViewProfile.addPhotoButton}>
+                <MaterialIcons name="add-photo-alternate" size={50} color="black" />
+              </TouchableOpacity>
+            )}
+            <View style={ViewProfile.boxContainer}>
+              <Text style={ViewProfile.descriptor}>Username</Text>
+              <Text style={ViewProfile.text}>{user.displayName}</Text>
+            </View>
+            <View style={ViewProfile.boxContainer}>
+              <Text style={ViewProfile.descriptor}>Email</Text>
+              <Text style={ViewProfile.text}>{user.email}</Text>
+            </View>
+            <View style={ViewProfile.boxContainer}>
+              <Text style={ViewProfile.descriptor}>Dizzy Bio</Text>
+              <Text style={ViewProfile.text}>{userDoc?.bio}</Text>
+            </View>
+            <View style={ViewProfile.boxContainer}>
+              <Text style={ViewProfile.descriptor}>Rating</Text>
+              <Text style={ViewProfile.text}>{userDoc?.rating}</Text>
+            </View>
+
+            <View style={{ borderColor:'#ccc', borderWidth:1, borderRadius: 20, padding:5 }}>
+              <Button title="Sign Out" onPress={SignOut} />
+            </View>
+          </View>
+        ) : (
+          // If the user is not logged in, display the following
+          <View style={ViewProfile.signInContainer}>
+            <Text>Please sign in to view your profile</Text>
+            <Button title="Sign In" onPress={() => navigation.navigate('Login')} />
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 

@@ -12,6 +12,9 @@ const ViewParks = () => {
   const [parks, setParks] = useState<any[]>([]);
   const [filteredParks, setFilteredParks] = useState<any[]>([]);
 
+  const parksDB = collection(FIREBASE_DB, 'parks');
+
+
   const navigation = useNavigation();
 
   React.useLayoutEffect(() => {
@@ -26,62 +29,44 @@ const ViewParks = () => {
   }, [navigation]);
 
 
-  useEffect(() => {
-    const parksDB = collection(FIREBASE_DB, 'parks');
-
-    // const getUsers = async () => {
-    //   const snapshot = await getDocs(parksDB);
-  
-    //   const data = snapshot.docs.map(d => ({id: d.id, ...d.data() }))
-    //   console.log(data);
-  
-    //   setParks(data);
-      
-    //   console.log("PARKS: "+ parks);
-    // };
-
+  React.useEffect(() => {
     const unsubscribe = onSnapshot(parksDB, {
       next: (snapshot) => {
-        // getUsers();
         const tempParks: any[] = [];
-        const tempFilter: any[] = [];
         snapshot.forEach((doc) => {
           tempParks.push({
-            id: doc.id,
-            ...doc.data(),
-          });
-          tempFilter.push({
             id: doc.id,
             ...doc.data(),
           });
         });
 
         setParks(tempParks);
-        setFilteredParks(tempFilter);
-        setLoading(false); 
-        console.log("PARKS: "+ parks);
-        console.log("LOADED PARKS");
+        setLoading(false);
       },
       error: (error) => {
         console.log(error);
-        setLoading(false); 
+        setLoading(false);
       },
     });
 
     return () => unsubscribe();
   }, []);
-  // useEffect(() => parks.length && filteredParks.length, [parks, filteredParks]);
+
+  React.useEffect(() => {
+    handleSearch(searchQuery);
+  }, [parks, searchQuery]);
 
   const handleSearch = (query: any) => {
     setSearchQuery(query);
-    console.log("parks:" +parks)
-    
-    const fp = parks.filter((park) =>
-      park.name.toLowerCase().includes(query.toLowerCase())
-    );
-
-    console.log(fp)
-    setFilteredParks(fp);
+    if (query.trim() === '' || query === null || query === undefined || query === "") {
+      console.log("empty query")
+    } else {
+      const fp = parks.filter((park) =>
+        park.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredParks(fp);
+    }
+    console.log(query)
   };
 
   const handleParkBoxClick = (parkId: any) => {
