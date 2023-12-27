@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_DB } from '../FirebaseConfig';
 import { globalStyles, viewParks } from '../styles/globalStyles';
@@ -14,27 +14,52 @@ const ViewParks = () => {
 
   const navigation = useNavigation();
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      // headerShown:false,
+      headerLargeTitle: true,
+      headerSearchBarOptions: {
+        placeholder: 'Search',
+        onChangeText: (query: any) => handleSearch(query.nativeEvent.text),
+      },
+    });
+  }, [navigation]);
+
+
   useEffect(() => {
     const parksDB = collection(FIREBASE_DB, 'parks');
 
+    // const getUsers = async () => {
+    //   const snapshot = await getDocs(parksDB);
+  
+    //   const data = snapshot.docs.map(d => ({id: d.id, ...d.data() }))
+    //   console.log(data);
+  
+    //   setParks(data);
+      
+    //   console.log("PARKS: "+ parks);
+    // };
+
     const unsubscribe = onSnapshot(parksDB, {
       next: (snapshot) => {
-        const parks: any[] = [];
-        const filteredParks: any[] = [];
+        // getUsers();
+        const tempParks: any[] = [];
+        const tempFilter: any[] = [];
         snapshot.forEach((doc) => {
-          parks.push({
+          tempParks.push({
             id: doc.id,
             ...doc.data(),
           });
-          filteredParks.push({
+          tempFilter.push({
             id: doc.id,
             ...doc.data(),
           });
         });
 
-        setParks(parks);
-        setFilteredParks(filteredParks);
+        setParks(tempParks);
+        setFilteredParks(tempFilter);
         setLoading(false); 
+        console.log("PARKS: "+ parks);
         console.log("LOADED PARKS");
       },
       error: (error) => {
@@ -45,13 +70,18 @@ const ViewParks = () => {
 
     return () => unsubscribe();
   }, []);
+  // useEffect(() => parks.length && filteredParks.length, [parks, filteredParks]);
 
   const handleSearch = (query: any) => {
     setSearchQuery(query);
-    const filteredParks = parks.filter((park) =>
+    console.log("parks:" +parks)
+    
+    const fp = parks.filter((park) =>
       park.name.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredParks(filteredParks);
+
+    console.log(fp)
+    setFilteredParks(fp);
   };
 
   const handleParkBoxClick = (parkId: any) => {

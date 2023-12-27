@@ -116,7 +116,9 @@ export const globalStyles = StyleSheet.create({
     },
     parkBox: {
       // display:'flex',
+
       flexDirection: 'row',
+      // flexWrap: 'wrap',
       alignItems: 'center',
       padding: 10,
       borderColor: 'darkgray',
@@ -126,18 +128,23 @@ export const globalStyles = StyleSheet.create({
       backgroundColor: 'white',
       gap: 15
       // height: 150,
+      // flexWrap: 'wrap',
+
   },
 
     textContainer: {
         display:'flex',
         // justifyContent: 'space-evenly',
         gap: 5,
+        flexWrap: 'wrap',
     
     }, 
     title:{
         fontSize: 20,
         fontWeight: 'bold',
         color: 'black',
+        flexWrap: 'wrap',
+        maxWidth: '90%',
     },
     location:{
         fontSize: 10,
