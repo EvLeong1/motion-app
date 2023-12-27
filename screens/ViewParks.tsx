@@ -58,8 +58,9 @@ const ViewParks = () => {
 
   const handleSearch = (query: any) => {
     setSearchQuery(query);
-    if (query.trim() === '' || query === null || query === undefined || query === "") {
-      console.log("empty query")
+  
+    if (query.trim() === '') {
+      setFilteredParks(parks);
     } else {
       const fp = parks.filter((park) =>
         park.name.toLowerCase().includes(query.toLowerCase())
