@@ -24,8 +24,15 @@ export type RootStackParamList = {
   TabBar: undefined;
   Login: undefined;
   Register: undefined;
-  ParkInfo: { park: any };
+  ParkInfo: { park: Park };
 };
+
+export type Park = {
+  id: string;
+  image: string;
+  location: string[];
+  name: string;
+}
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();

@@ -17,14 +17,14 @@ import {
 import { FIREBASE_DB } from '../FirebaseConfig';
 import { globalStyles, viewParks } from '../styles/globalStyles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../App';
+import { Park, RootStackParamList } from '../App';
 
 const ViewParks = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
-  const [parks, setParks] = useState<any[]>([]);
-  const [filteredParks, setFilteredParks] = useState<any[]>([]);
+  const [parks, setParks] = useState<Park[]>([]);
+  const [filteredParks, setFilteredParks] = useState<Park[]>([]);
 
   const parksDB = collection(FIREBASE_DB, 'parks');
 
