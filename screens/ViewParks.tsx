@@ -44,11 +44,11 @@ const ViewParks = () => {
   React.useEffect(() => {
     const unsubscribe = onSnapshot(parksDB, {
       next: (snapshot) => {
-        const tempParks: any[] = [];
+        const tempParks: Park[] = [];
         snapshot.forEach((doc) => {
           tempParks.push({
-            id: doc.id,
-            ...doc.data(),
+            ...doc.data() as Park,
+            id: doc.id
           });
         });
 
@@ -82,7 +82,7 @@ const ViewParks = () => {
     console.log(query);
   };
 
-  const handleParkBoxClick = (park: any) => {
+  const handleParkBoxClick = (park: Park) => {
     console.log(`Clicked on park with ID: ${park.id}`);
     navigation.navigate('ParkInfo', { park: park });
   };
