@@ -49,7 +49,59 @@ export const globalStyles = StyleSheet.create({
     },
   });
   
+  export const loginStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        gap: 15,
+      },
 
+      input: {
+        backgroundColor: '#d8d8d8',
+        height: 45,
+        margin: 12,
+        color: 'black',
+        borderColor: 'gray',
+        borderWidth: 1,
+        padding: 10,
+        width: 300,
+        borderRadius: 12,
+       
+    }, 
+
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 8,
+        elevation: 3,
+        backgroundColor: '#53524E',
+        color: 'white',
+        width: 300,
+        
+    },
+    text: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+    },
+    link: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#384ef5',
+        
+    },
+    forgot:{
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#384Ef5',
+        // alignItems: 'right'
+  }
+})
   export const registerStyles = StyleSheet.create({
     // display:'flex', alignItems: 'center', justifyContent: 'center'
     container: {

@@ -1,6 +1,6 @@
 import { View, Text, Alert, ActivityIndicator, Pressable, Keyboard } from 'react-native'
 import React from 'react'
-import { globalStyles, registerStyles } from '../styles/globalStyles'
+import { globalStyles, registerStyles, loginStyles } from '../styles/globalStyles'
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import Toast from 'react-native-root-toast';
@@ -79,34 +79,39 @@ const Login = ({ navigation }: { navigation: any }) => {
   }
 
   return (
-    <SafeAreaView style={registerStyles.container}>
+    <SafeAreaView style={loginStyles.container}>
       <Text style={{fontSize: 30, fontWeight: 'bold', marginBottom: '10%',marginTop:'5%'}}>Sign In To Account</Text>
       <TextInput
-        style={registerStyles.input}
+        style={loginStyles.input}
         onChangeText={(text) => setEmail(text)}
         placeholder="Email"
         keyboardType='email-address'
         autoComplete='email'
+        placeholderTextColor='#3d3d3d'
       />
       <TextInput
-        style={registerStyles.input}
+        style={loginStyles.input}
         onChangeText={(text) => setPassword(text)}
         placeholder="Password"
+        placeholderTextColor='#3d3d3d'
         secureTextEntry={true}
       />
+      <Pressable style = {{marginTop:'0%'}}onPress={() => navigation.navigate('Register')}>
+        <Text style ={loginStyles.forgot}>Forgot Password?</Text>
+      </Pressable>
       { loading ? <ActivityIndicator size='large' color='#00ff00' /> : <>
-                <Pressable style={registerStyles.button}  onPress={login}>
-                    <Text style={registerStyles.text}>Login</Text>
+                <Pressable style={loginStyles.button}  onPress={login}>
+                    <Text style={loginStyles.text}>Login</Text>
                 </Pressable>
             </>
       }
 
       <Pressable style = {{marginTop:'4%'}}onPress={() => navigation.navigate('Register')}>
-        <Text style={registerStyles.link}>Don't have an account? Register</Text>
+        <Text style={loginStyles.link}>Don't have an account? Register</Text>
       </Pressable> 
-      <Pressable style = {{marginTop:'4%'}}>
-        <Text style={registerStyles.link}>Forgot Password?</Text>
-      </Pressable> 
+      {/* <Pressable style = {{marginTop:'4%'}}> */}
+      {/*   <Text style={loginStyles.link}>Forgot Password?</Text> */}
+      {/* </Pressable>  */}
       
     </SafeAreaView>
   )
