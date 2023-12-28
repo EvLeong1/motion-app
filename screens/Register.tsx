@@ -131,12 +131,14 @@ const Register = ({ navigation }: { navigation: any }) => {
                 style={registerStyles.input}
                 onChangeText={(text) => setUserName(text)}
                 placeholder="Username"  
+                placeholderTextColor='#3d3d3d'
                 // autoComplete='email'
             />
             <TextInput
                 style={registerStyles.input}
                 onChangeText={(text) => setEmail(text)}
                 placeholder="Email"
+                placeholderTextColor='#3d3d3d'
                 keyboardType='email-address'
                 autoComplete='email'
                 // textContentType = 'emailAddress'
@@ -145,6 +147,7 @@ const Register = ({ navigation }: { navigation: any }) => {
                 style={registerStyles.input}
                 onChangeText={(text) => setPassword(text)}
                 placeholder="Password"
+                placeholderTextColor='#3d3d3d'
                 autoComplete='password'
                 secureTextEntry={true}
             />

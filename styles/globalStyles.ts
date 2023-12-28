@@ -112,11 +112,11 @@ export const globalStyles = StyleSheet.create({
       },
 
       input: {
-        backgroundColor: '#CDD4FF',
+        backgroundColor: '#d8d8d8',
         height: 45,
         margin: 12,
         color: 'black',
-        borderColor: '#88E8FF',
+        borderColor: 'gray',
         borderWidth: 1,
         padding: 10,
         width: 300,
@@ -130,7 +130,7 @@ export const globalStyles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 8,
         elevation: 3,
-        backgroundColor: '#88E8FF',
+        backgroundColor: '#53524E',
         color: 'white',
         width: 300,
         
@@ -144,7 +144,8 @@ export const globalStyles = StyleSheet.create({
     },
     link: {
         fontSize: 15,
-        color: '#8898FF',
+        fontWeight: 'bold',
+        color: '#384ef5',
         
     },
   });
