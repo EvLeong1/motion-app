@@ -24,7 +24,7 @@ const ViewParks = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [parks, setParks] = useState<Park[]>([]);
-  const [filteredParks, setFilteredParks] = useState<Park[]>([]);
+  // const [filteredParks, setFilteredParks] = useState<Park[]>([]);
 
   const parksDB = collection(FIREBASE_DB, 'parks');
 
@@ -71,16 +71,20 @@ const ViewParks = () => {
   const handleSearch = (query: any) => {
     setSearchQuery(query);
 
-    if (query.trim() === '') {
-      setFilteredParks(parks);
-    } else {
-      const fp = parks.filter((park) =>
-        park.name.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredParks(fp);
-    }
-    console.log(query);
+    // if (query.trim() === '') {
+    //   setFilteredParks(parks);
+    // } else {
+    //   const fp = parks.filter((park) =>
+    //     park.name.toLowerCase().includes(query.toLowerCase())
+    //   );
+    //   setFilteredParks(fp);
+    // }
+    // console.log(query);
   };
+
+  const filteredParks = parks.filter((park) =>
+    park.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleParkBoxClick = (park: Park) => {
     console.log(`Clicked on park with ID: ${park.id}`);
