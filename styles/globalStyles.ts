@@ -197,7 +197,7 @@ export const globalStyles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'black',
         flexWrap: 'wrap',
-        maxWidth: '90%',
+        maxWidth: '99%',
     },
     location:{
         fontSize: 10,

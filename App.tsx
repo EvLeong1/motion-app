@@ -19,12 +19,14 @@ import ViewParks from './screens/ViewParks';
 import { FIREBASE_AUTH } from './FirebaseConfig';
 import { colors } from './styles/colors';
 import ParkInfo from './screens/ParkInfo';
+import RideInfo from './screens/RideInfo';
 
 export type RootStackParamList = {
   TabBar: undefined;
   Login: undefined;
   Register: undefined;
   ParkInfo: { park: Park };
+  RideInfo: { ride: Ride};
 };
 
 export type Park = {
@@ -32,6 +34,16 @@ export type Park = {
   image: string;
   location: string[];
   name: string;
+}
+
+export type Ride = {
+  id: string;
+  name: string;
+  park: string;
+  image: string;
+  video: string;
+  rideID: string;
+  rating: string;
 }
 
 const Tab = createBottomTabNavigator();
@@ -95,6 +107,8 @@ function TabBar() {
           ),
         }}
       />
+      {/*  */}
+
     </Tab.Navigator>
   );
 }
@@ -121,6 +135,7 @@ export default function App() {
           <Stack.Screen name='Login' component={Login} />
           <Stack.Screen name='Register' component={Register} />
           <Stack.Screen name='ParkInfo' component={ParkInfo} />
+          <Stack.Screen name='RideInfo' component={RideInfo} />
         </Stack.Navigator>
       </NavigationContainer>
     </RootSiblingParent>

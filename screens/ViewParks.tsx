@@ -87,7 +87,7 @@ const ViewParks = () => {
   );
 
   const handleParkBoxClick = (park: Park) => {
-    console.log(`Clicked on park with ID: ${park.id}`);
+    // console.log(`Clicked on park with ID: ${park.id}`);
     navigation.navigate('ParkInfo', { park: park });
   };
 
