@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  Button,
   Image,
   SafeAreaView,
   ScrollView,
@@ -13,11 +14,13 @@ import {
   CompositeNavigationProp,
   ParamListBase,
   useNavigation,
+  useScrollToTop,
 } from '@react-navigation/native';
 import { FIREBASE_DB } from '../FirebaseConfig';
 import { globalStyles, viewParks } from '../styles/globalStyles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Park, RootStackParamList } from '../App';
+
 
 const ViewParks = () => {
   const [loading, setLoading] = useState(true);
@@ -26,6 +29,15 @@ const ViewParks = () => {
   const [parks, setParks] = useState<Park[]>([]);
   // const [filteredParks, setFilteredParks] = useState<Park[]>([]);
 
+  // const scrollRef = useRef<ScrollView>(null);
+
+  // const onPressTouch = () => {
+  //   scrollRef.current?.scrollTo({
+  //     y: 0,
+  //     animated: true,
+  //   });
+  // }
+
   const parksDB = collection(FIREBASE_DB, 'parks');
 
   const navigation = useNavigation<any>();
@@ -33,11 +45,25 @@ const ViewParks = () => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       // headerShown:false,
-      headerLargeTitle: true,
+      // headerLargeTitle: true,
       headerSearchBarOptions: {
         placeholder: 'Search',
         onChangeText: (query: any) => handleSearch(query.nativeEvent.text),
+        hideWhenScrolling: false,
       },
+      headerTitleStyle: {
+        color: 'black',
+        fontSize: 20,
+      },
+      headerTitle: 'All Parks',
+      
+      // headerLargeStyle: {
+      //   backgroundColor: 'black',
+      // },
+      // statusBarStyle: 'dark',
+      // headerStyle: {
+      //   height: 200, // Set the height you desire for the large header
+      // },
     });
   }, [navigation]);
 
@@ -71,15 +97,6 @@ const ViewParks = () => {
   const handleSearch = (query: any) => {
     setSearchQuery(query);
 
-    // if (query.trim() === '') {
-    //   setFilteredParks(parks);
-    // } else {
-    //   const fp = parks.filter((park) =>
-    //     park.name.toLowerCase().includes(query.toLowerCase())
-    //   );
-    //   setFilteredParks(fp);
-    // }
-    // console.log(query);
   };
 
   const filteredParks = parks.filter((park) =>
@@ -108,7 +125,8 @@ const ViewParks = () => {
           </View>
         )
         : (
-          <ScrollView contentContainerStyle={viewParks.container}>
+          
+          <ScrollView contentContainerStyle={viewParks.container} >
             {filteredParks.sort((a, b) => a.name.localeCompare(b.name)).map((
               park,
             ) => (
@@ -126,8 +144,18 @@ const ViewParks = () => {
                 </View>
               </TouchableOpacity>
             ))}
+            
           </ScrollView>
         )}
+        {/* <View style={{flex:1}}>
+        <View style={{borderWidth:1,position:'absolute',bottom:50,alignSelf:'flex-end'}}>
+           <Button
+             title="Press"
+             color="#841584"
+             accessibilityLabel="Press"
+             onPress={onPressTouch}/>
+        </View>
+      </View> */}
     </SafeAreaView>
   );
 };

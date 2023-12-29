@@ -211,7 +211,9 @@ export const globalStyles = StyleSheet.create({
       borderRadius: 20, 
       borderColor: 'black', 
       borderWidth: 1
-    }
+    },
+    
+
 });
 
 export const ViewProfile = StyleSheet.create({
