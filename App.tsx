@@ -22,6 +22,7 @@ import ParkInfo from './screens/ParkInfo';
 import RideInfo from './screens/RideInfo';
 
 export type RootStackParamList = {
+  Home: undefined;
   TabBar: undefined;
   Login: undefined;
   Register: undefined;

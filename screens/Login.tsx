@@ -5,10 +5,14 @@ import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import Toast from 'react-native-root-toast';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Login'>
 
 import { FIREBASE_AUTH } from '../FirebaseConfig';
+import { RootStackParamList } from '../App';
 
-const Login = ({ navigation }: { navigation: any }) => {
+const Login = ({ navigation }: Props) => {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
