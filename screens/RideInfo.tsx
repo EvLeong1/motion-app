@@ -3,6 +3,7 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import {rideInfoStyles} from '../styles/globalStyles'
 
 type RideInfoProps = NativeStackScreenProps<RootStackParamList, 'RideInfo'>;
 
@@ -16,14 +17,16 @@ const RideInfo = ({ route, navigation }: RideInfoProps) => {
   };
 
   return (
-    <View style={{ display: 'flex', alignItems: 'center' }}>
-      <Text>{`Ride name: ${ride.name}`}</Text>
-      <Text>{`ride id: ${ride.id}`}</Text>
-      <Text>{`Ride park: ${ride.park}`}</Text>
+    // <View style={{ display: 'flex', alignItems: 'center' }}>
+      <View style={rideInfoStyles.container}>
+
+      <Text style={rideInfoStyles.title}>{`${ride.name}`}</Text>
+      {/* <Text style={rideInfoStyles.text}>{`ride id: ${ride.id}`}</Text> */}
+      <Text style={rideInfoStyles.text}>{`Dizzy Level: ${ride.rating}`}</Text>
       {isVideoLoading ? (
         <ActivityIndicator size="large" color="black" />
       ) : (
-        <View style={{ borderColor: 'black', borderWidth: 4, borderRadius: 10 }}>
+        <View style={rideInfoStyles.video}>
           <YoutubePlayer
             height={176} // max is 220
             width={320} // max is 400
@@ -33,6 +36,7 @@ const RideInfo = ({ route, navigation }: RideInfoProps) => {
           />
         </View>
       )}
+      <Text style={rideInfoStyles.title}>{'Reviews'}</Text>
     </View>
   );
 };
