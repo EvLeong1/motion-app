@@ -46,6 +46,17 @@ export type Ride = {
   rating: string;
 }
 
+export type Review = {
+  username: string;
+  parkID: string;
+  rideID: string;
+  date: string; // or Date;
+  text: string;
+  rating: string;
+  hasDrops: boolean;
+  isDark: boolean
+}
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const ViewParksStack = createNativeStackNavigator();

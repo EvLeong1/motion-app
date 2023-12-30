@@ -5,7 +5,7 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 import { RadioButton, Divider, ToggleButton } from 'react-native-paper';
 import Modal from 'react-native-modal'; 
 import { rideInfoStyles } from '../styles/globalStyles';
-import { RootStackParamList } from '../App';
+import { Review, RootStackParamList } from '../App';
 import { Icon } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,11 +14,11 @@ type RideInfoProps = NativeStackScreenProps<RootStackParamList, 'RideInfo'>;
 
 const RideInfo = ({ route, navigation }: RideInfoProps) => {
   const ride = route.params.ride;
-  const [isVideoLoading, setVideoLoading] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isVideoLoading, setVideoLoading] = useState<boolean>(false);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [reviewText, setReviewText] = useState('');
-  const [isDarkRide, setDarkRide] = useState(false);
-  const [hasDrops, setHasDrops] = useState(false);
+  const [isDarkRide, setDarkRide] = useState<boolean>(false);
+  const [hasDrops, setHasDrops] = useState<boolean>(false);
   const [motionRating, setMotionRating] = useState('1');
 
   const handleVideoReady = () => {
@@ -29,16 +29,29 @@ const RideInfo = ({ route, navigation }: RideInfoProps) => {
   const toggleModal = () => setModalVisible(!isModalVisible);
 
   const handleAddReview = () => {
+
+    // populate Review object
+    let newReview : Review = {
+      parkID : route.params.ride.park,
+      rideID : route.params.ride.rideID,
+      username : "", // do we have props for this?
+      date : new Date().toString(),
+      text : reviewText,
+      hasDrops: hasDrops,
+      isDark: isDarkRide,
+      rating: motionRating
+
+    };
+
     // Implement logic to save the review and its details
-    console.log('Review Text:', reviewText);
-    console.log('Is Dark Ride:', isDarkRide);
-    console.log('Has Drops:', hasDrops);
-    if(motionRating == null){
-      
+    console.log('Review Text:', newReview.text);
+    console.log('Is Dark Ride:', newReview.isDark);
+    console.log('Has Drops:', newReview.hasDrops);
+    if( newReview.rating == null ){
       
       return;
     }
-    console.log('Motion Rating:', motionRating);
+    console.log('Motion Rating:', newReview.rating);
 
     // Add logic to save the review details and close the modal
     toggleModal();
