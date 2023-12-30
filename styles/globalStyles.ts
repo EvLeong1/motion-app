@@ -277,10 +277,11 @@ export const rideInfoStyles = StyleSheet.create({
   },
 
   title: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontWeight: 'bold',
     fontSize: 35,
     padding: 20,
+    // text: 'left',
   },
 
   text: {
@@ -290,4 +291,69 @@ export const rideInfoStyles = StyleSheet.create({
     padding: 10,
     textAlign: 'left',
   },
+  modalContainer:{
+    // flex: 0,
+    // justifyContent: 'center',
+    gap: 5,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    // padding: 10,
+    height: '80%',
+    borderRadius: 20,
+    // margin: 0,
+    width: '100%',
+    marginTop: 70
+
+   
+  },
+  modalDescription: {
+    // textAlign: 'center',
+    // fontWeight: 'bold',
+    fontStyle: 'italic',
+    fontSize: 10,
+    // padding: 20,
+  },
+  modalTitle: {
+    // textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 35,
+    padding: 20,
+  },
+  modalText: {
+    marginRight: 'auto',
+    fontWeight: 'bold',
+    fontSize: 20,
+    padding: 10,
+    textAlign: 'left',
+    width: '100%',
+    height: 50,
+  },
+  modalReview: {
+    marginRight: 'auto',
+    // fontWeight: 'bold',
+    fontSize: 15,
+    padding: 10,
+    textAlign: 'left',
+    width: '100%',
+    height: 200,
+    // borderWidth: 1,
+    borderColor: '#ccc',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    // borderRadius: 10
+
+  },
+  addRevButton:{
+    backgroundColor: '#53524E',
+    color: 'white',
+    borderRadius: 8,
+    width: '40%',
+    marginTop: 50,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  
+  }
+
+  
+  
 });

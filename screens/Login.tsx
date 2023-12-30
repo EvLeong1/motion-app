@@ -12,7 +12,6 @@ const Login = ({ navigation }: { navigation: any }) => {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-
   const [loading, setLoading] = React.useState(false);
   
   // const navi = useNavigation();
@@ -81,21 +80,30 @@ const Login = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={loginStyles.container}>
       <Text style={{fontSize: 30, fontWeight: 'bold', marginBottom: '10%',marginTop:'5%'}}>Sign In To Account</Text>
-      <TextInput
-        style={loginStyles.input}
-        onChangeText={(text) => setEmail(text)}
-        placeholder="Email"
-        keyboardType='email-address'
-        autoComplete='email'
-        placeholderTextColor='#3d3d3d'
-      />
-      <TextInput
-        style={loginStyles.input}
-        onChangeText={(text) => setPassword(text)}
-        placeholder="Password"
-        placeholderTextColor='#3d3d3d'
-        secureTextEntry={true}
-      />
+      <View>
+        <TextInput
+          autoComplete='email'
+          style={loginStyles.input}
+          onChangeText={(text) => setEmail(text)}
+          placeholder="email"
+          keyboardType='email-address'
+          placeholderTextColor='#3d3d3d'
+          autoCorrect={false}
+          secureTextEntry={false}
+
+        />
+      </View>
+      <View>
+        <TextInput
+          style={loginStyles.input}
+          onChangeText={(pass) => setPassword(pass)}
+          placeholder="password"
+          placeholderTextColor='#3d3d3d'
+          secureTextEntry={true}
+          // autoComplete='password'
+          autoCorrect={false}
+        />
+      </View>
       <Pressable style = {{marginTop:'0%'}}onPress={() => navigation.navigate('Register')}>
         <Text style ={loginStyles.forgot}>Forgot Password?</Text>
       </Pressable>
