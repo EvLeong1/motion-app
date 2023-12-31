@@ -3,14 +3,17 @@ import React from 'react'
 import { globalStyles,registerStyles } from '../styles/globalStyles'
 import {SafeAreaView, StyleSheet, TextInput, Button, Alert, Pressable} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from 'axios';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../FirebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from '@firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import Toast from 'react-native-root-toast';
+import { RootStackParamList } from '../App';
 
-const Register = ({ navigation }: { navigation: any }) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Register'>
+
+const Register = ({ navigation }: Props) => {
     
     const [username, setUserName] = React.useState('');
     const [email, setEmail] = React.useState('');

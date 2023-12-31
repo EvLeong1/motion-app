@@ -23,6 +23,7 @@ import RideInfo from './screens/RideInfo';
 import MyReviews from './screens/MyReviews';
 
 export type RootStackParamList = {
+  Home: undefined;
   TabBar: undefined;
   Login: undefined;
   Register: undefined;

@@ -6,9 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors } from '../styles/colors';
 // import pic from '../assets/4x.webp';
 
-
-
-const Home = ({ navigation }: { navigation: any }) => {
+const Home = () => {
   return (
     <SafeAreaView style={globalStyles.container}>
       <ScrollView>
