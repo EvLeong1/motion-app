@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../FirebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { ViewProfile } from '../styles/globalStyles';
+import { ViewProfile, globalStyles } from '../styles/globalStyles';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Profile = ({ navigation }: { navigation: any }) => {
@@ -99,6 +99,10 @@ const Profile = ({ navigation }: { navigation: any }) => {
             <View style={ViewProfile.boxContainer}>
               <Text style={ViewProfile.descriptor}>Rating</Text>
               <Text style={ViewProfile.text}>{userDoc?.rating}</Text>
+            </View>
+
+            <View style={globalStyles.button}>
+              <Button color="white" title="My Reviews" onPress={() => navigation.navigate('MyReviews', { user: userDoc })} />
             </View>
 
             <View style={{ borderColor:'#ccc', borderWidth:1, borderRadius: 20, padding:5 }}>

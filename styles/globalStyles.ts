@@ -353,7 +353,57 @@ export const rideInfoStyles = StyleSheet.create({
     // justifyContent: 'center',
   
   }
+});
 
-  
-  
+export const reviewStyles = StyleSheet.create({
+
+  reviewBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+    borderColor: 'darkgray',
+    borderRadius: 20,
+    shadowColor: 'darkgray',
+    shadowRadius: 4,
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.2,
+    width: '90%',
+    backgroundColor: 'white',
+    gap: 15,
+    flexWrap: 'wrap',
+  },
+
+  text: {
+
+  },
+
+  wide: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: 4
+  },
+
+  vertLeft: {
+    width: '50%',
+  },
+
+  vertRight: {
+    display: 'flex',
+    width: '50%',
+    textAlign: 'right',
+    alignItems: 'flex-end'
+  },
+
+  textContainer: {
+    width: '100%',
+  },
+
+  textContent: {
+    fontStyle: 'italic',
+  }
+
 });

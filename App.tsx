@@ -20,13 +20,15 @@ import { FIREBASE_AUTH } from './FirebaseConfig';
 import { colors } from './styles/colors';
 import ParkInfo from './screens/ParkInfo';
 import RideInfo from './screens/RideInfo';
+import MyReviews from './screens/MyReviews';
 
 export type RootStackParamList = {
   TabBar: undefined;
   Login: undefined;
   Register: undefined;
   ParkInfo: { park: Park };
-  RideInfo: { ride: Ride};
+  RideInfo: { ride: Ride };
+  MyReviews: { user: any };
 };
 
 export type Park = {
@@ -50,7 +52,7 @@ export type Review = {
   username: string;
   parkID: string;
   rideID: string;
-  date: string; // or Date;
+  date: string; // or Date type;
   text: string;
   rating: string;
   hasDrops: boolean;
@@ -60,11 +62,18 @@ export type Review = {
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const ViewParksStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
 
 const ViewParksStackNavigator = () => (
   <ViewParksStack.Navigator>
     <ViewParksStack.Screen name='View Parks' component={ViewParks} />
   </ViewParksStack.Navigator>
+);
+
+const ProfileStackNavigator = () => (
+  <ProfileStack.Navigator>
+    <ProfileStack.Screen name='My Profile' component={Profile} />
+  </ProfileStack.Navigator>
 );
 
 function TabBar() {
@@ -110,12 +119,13 @@ function TabBar() {
       />
       <Tab.Screen
         name='Profile'
-        component={Profile}
+        component={ProfileStackNavigator}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <Icon name='user-circle-o' size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
       {/*  */}
@@ -147,6 +157,7 @@ export default function App() {
           <Stack.Screen name='Register' component={Register} />
           <Stack.Screen name='ParkInfo' component={ParkInfo} />
           <Stack.Screen name='RideInfo' component={RideInfo} />
+          <Stack.Screen name='MyReviews' component={MyReviews} />
         </Stack.Navigator>
       </NavigationContainer>
     </RootSiblingParent>
