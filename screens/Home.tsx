@@ -1,24 +1,60 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native'
-import React from 'react'
-import { globalStyles } from '../styles/globalStyles'
-import { SafeAreaView, StyleSheet, TextInput, Button, Alert, Pressable } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+  Animated,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
+import { PropsWithChildren, useEffect, useRef } from 'react';
+import { globalStyles } from '../styles/globalStyles';
 import { colors } from '../styles/colors';
-// import pic from '../assets/4x.webp';
+
+type FadeInViewProps = PropsWithChildren<{ style: ViewStyle }>;
+
+const FadeInView: React.FC<FadeInViewProps> = (props) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
+  return (
+    <Animated.View // Special animatable View
+      style={{
+        ...props.style,
+        opacity: fadeAnim, // Bind opacity to animated value
+      }}
+    >
+      {props.children}
+    </Animated.View>
+  );
+};
 
 const Home = () => {
   return (
     <SafeAreaView style={globalStyles.container}>
-      <ScrollView>
-        <View style={globalStyles.scrollView}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>Motion APP</Text>
-            <Text style={{ fontSize: 30, color: 'black' }}>Welcome to Motion</Text>
-          </View>
-          <Image style={{width: 200, height: 200, borderRadius: 20}} source={{uri:'https://media1.tenor.com/m/u28GHpki8VgAAAAd/cat-walking.gif'}} />
-          
+      <FadeInView style={globalStyles.scrollView}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>
+            Motion APP
+          </Text>
+          <Text style={{ fontSize: 30, color: 'black' }}>
+            Welcome to Motion
+          </Text>
         </View>
-      </ScrollView>
+        <Image
+          style={{ width: 200, height: 200, borderRadius: 20 }}
+          source={{
+            uri: 'https://media1.tenor.com/m/u28GHpki8VgAAAAd/cat-walking.gif',
+          }}
+        />
+      </FadeInView>
     </SafeAreaView>
   );
 };
