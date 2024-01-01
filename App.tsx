@@ -21,6 +21,7 @@ import { colors } from './styles/colors';
 import ParkInfo from './screens/ParkInfo';
 import RideInfo from './screens/RideInfo';
 import MyReviews from './screens/MyReviews';
+import { Timestamp } from 'firebase/firestore';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -53,11 +54,13 @@ export type Review = {
   username: string;
   parkID: string;
   rideID: string;
-  date: string; // or Date type;
+  rideName: string;
+  date: string; 
   text: string;
   rating: string;
   hasDrops: boolean;
   isDark: boolean
+
 }
 
 const Tab = createBottomTabNavigator();

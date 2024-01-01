@@ -9,6 +9,7 @@ import { Review, RootStackParamList } from '../App';
 import { Icon } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FIREBASE_DB } from '../FirebaseConfig';
 
 type RideInfoProps = NativeStackScreenProps<RootStackParamList, 'RideInfo'>;
 
@@ -30,17 +31,21 @@ const RideInfo = ({ route, navigation }: RideInfoProps) => {
 
   const handleAddReview = () => {
 
+    // console.log(new Date().toString())
+
     // populate Review object
     let newReview : Review = {
       parkID : route.params.ride.park,
       rideID : route.params.ride.rideID,
+      rideName: route.params.ride.name,
+      email : "", // do we have props for this?
       username : "", // do we have props for this?
       date : new Date().toString(),
       text : reviewText,
       hasDrops: hasDrops,
       isDark: isDarkRide,
-      rating: motionRating
-
+      rating: motionRating,
+      upvotes: 0
     };
 
     // Implement logic to save the review and its details

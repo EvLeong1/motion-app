@@ -42,6 +42,9 @@ const MyReviews = ({ route, navigation } : MyReviewsProps) => {
   const Reviews = () => {
     let content : JSX.Element[] = new Array<JSX.Element>();
     reviews.forEach( (review) => {
+      
+      // const revDate = new Date(review.date);
+
       content.push(
 
         // The review objects only hold parkID and rideID, so
@@ -54,11 +57,11 @@ const MyReviews = ({ route, navigation } : MyReviewsProps) => {
         <View key={review.rideID} style={reviewStyles.reviewBox}>
           <View style={reviewStyles.wide}>
             <View style={reviewStyles.vertLeft}>
-              <Text style={viewParks.title}>{review.rideID}</Text>
+              <Text style={viewParks.title}>{review.rideName}</Text>
               <Text style={reviewStyles.text}>{review.parkID}</Text>
             </View>
             <View style={reviewStyles.vertRight}>
-              <Text style={reviewStyles.text}>{review.date}</Text>
+              <Text style={reviewStyles.text}>{new Date(review.date).toLocaleDateString()}</Text>
               <Text style={reviewStyles.text}>Rating: {review.rating}</Text>
             </View>
           </View>
