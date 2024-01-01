@@ -7,13 +7,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { PropsWithChildren, useEffect, useRef } from 'react';
+import { FC, PropsWithChildren, useEffect, useRef } from 'react';
 import { globalStyles } from '../styles/globalStyles';
 import { colors } from '../styles/colors';
 
 type FadeInViewProps = PropsWithChildren<{ style: ViewStyle }>;
 
-const FadeInView: React.FC<FadeInViewProps> = (props) => {
+const FadeInView: FC<FadeInViewProps> = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   useEffect(() => {
