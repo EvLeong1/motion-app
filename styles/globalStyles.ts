@@ -4,20 +4,13 @@ import { colors } from './colors';
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    //   padding: 10,
-    //   backgroundColor: '#D0E3CC',
     backgroundColor: colors.background,
-    //   alignItems: 'center',
-    //   justifyContent: 'center',
   },
   scrollView: {
-    // backgroundColor: colors.background,
     alignItems: 'center',
-    // justifyContent: 'center',
     marginHorizontal: 20,
     paddingBottom: 200,
   },
-
   input: {
     height: 40,
     margin: 12,
@@ -25,7 +18,6 @@ export const globalStyles = StyleSheet.create({
     padding: 10,
     width: 300,
   },
-
   button: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -36,7 +28,6 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: 'black',
     color: 'white',
   },
-
   text: {
     fontSize: 16,
     lineHeight: 21,
@@ -53,7 +44,6 @@ export const loginStyles = StyleSheet.create({
     alignItems: 'center',
     gap: 15,
   },
-
   input: {
     backgroundColor: '#d8d8d8',
     height: 45,
@@ -65,7 +55,6 @@ export const loginStyles = StyleSheet.create({
     width: 300,
     borderRadius: 12,
   },
-
   button: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -93,18 +82,16 @@ export const loginStyles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: '#384Ef5',
-    // alignItems: 'right'
   },
 });
+
 export const registerStyles = StyleSheet.create({
-  // display:'flex', alignItems: 'center', justifyContent: 'center'
   container: {
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
     gap: 20,
   },
-
   input: {
     backgroundColor: '#d8d8d8',
     height: 45,
@@ -157,10 +144,7 @@ export const viewParks = StyleSheet.create({
     color: 'black',
   },
   parkBox: {
-    // display:'flex',
-
     flexDirection: 'row',
-    // flexWrap: 'wrap',
     alignItems: 'center',
     padding: 10,
     borderColor: 'darkgray',
@@ -169,13 +153,9 @@ export const viewParks = StyleSheet.create({
     width: '95%',
     backgroundColor: 'white',
     gap: 15,
-    // height: 150,
-    // flexWrap: 'wrap',
   },
-
   textContainer: {
     display: 'flex',
-    // justifyContent: 'space-evenly',
     gap: 5,
     flexWrap: 'wrap',
   },
@@ -191,7 +171,6 @@ export const viewParks = StyleSheet.create({
     fontStyle: 'italic',
     color: 'black',
   },
-
   image: {
     width: 100,
     height: 100,
@@ -204,14 +183,11 @@ export const viewParks = StyleSheet.create({
 export const ViewProfile = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   profileContainer: {
     alignItems: 'center',
-    // borderWidth: 1,
-    // borderColor: '#ccc',
     padding: 20,
     borderRadius: 10,
     marginBottom: 20,
@@ -232,12 +208,10 @@ export const ViewProfile = StyleSheet.create({
     color: '#ccc',
     backgroundColor: '#ccc',
   },
-
   descriptor: {
     fontSize: 15,
     color: 'black',
     fontStyle: 'italic',
-    // textDecorationLine: 'underline',
   },
   text: {
     fontWeight: 'bold',
@@ -268,22 +242,18 @@ export const rideInfoStyles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
-
   video: {
     borderColor: 'black',
     borderWidth: 4,
     borderRadius: 10,
     alignItems: 'center',
   },
-
   title: {
     textAlign: 'left',
     fontWeight: 'bold',
     fontSize: 35,
     padding: 20,
-    // text: 'left',
   },
-
   text: {
     marginRight: 'auto',
     fontWeight: 'bold',
@@ -291,30 +261,20 @@ export const rideInfoStyles = StyleSheet.create({
     padding: 10,
     textAlign: 'left',
   },
-  modalContainer:{
-    // flex: 0,
-    // justifyContent: 'center',
+  modalContainer: {
     gap: 5,
     alignItems: 'center',
     backgroundColor: 'white',
-    // padding: 10,
     height: '80%',
     borderRadius: 20,
-    // margin: 0,
     width: '100%',
-    marginTop: 70
-
-   
+    marginTop: 70,
   },
   modalDescription: {
-    // textAlign: 'center',
-    // fontWeight: 'bold',
     fontStyle: 'italic',
     fontSize: 10,
-    // padding: 20,
   },
   modalTitle: {
-    // textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 35,
     padding: 20,
@@ -330,33 +290,25 @@ export const rideInfoStyles = StyleSheet.create({
   },
   modalReview: {
     marginRight: 'auto',
-    // fontWeight: 'bold',
     fontSize: 15,
     padding: 10,
     textAlign: 'left',
     width: '100%',
     height: 200,
-    // borderWidth: 1,
     borderColor: '#ccc',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    // borderRadius: 10
-
   },
-  addRevButton:{
+  addRevButton: {
     backgroundColor: '#53524E',
     color: 'white',
     borderRadius: 8,
     width: '40%',
     marginTop: 50,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  
-  }
+  },
 });
 
 export const reviewStyles = StyleSheet.create({
-
   reviewBox: {
     display: 'flex',
     flexDirection: 'column',
@@ -367,43 +319,34 @@ export const reviewStyles = StyleSheet.create({
     borderRadius: 20,
     shadowColor: 'darkgray',
     shadowRadius: 4,
-    shadowOffset: {width: 2, height: 2},
+    shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.2,
     width: '90%',
     backgroundColor: 'white',
     gap: 15,
     flexWrap: 'wrap',
   },
-
-  text: {
-
-  },
-
+  text: {},
   wide: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingRight: 4
+    paddingRight: 4,
   },
-
   vertLeft: {
     width: '50%',
   },
-
   vertRight: {
     display: 'flex',
     width: '50%',
     textAlign: 'right',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
-
   textContainer: {
     width: '100%',
   },
-
   textContent: {
     fontStyle: 'italic',
-  }
-
+  },
 });
