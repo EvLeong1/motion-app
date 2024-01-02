@@ -55,13 +55,14 @@ export type Review = {
   parkID: string;
   rideID: string;
   rideName: string;
-  date: string; 
+  date: string;
   text: string;
   rating: string;
   hasDrops: boolean;
-  isDark: boolean
-
-}
+  isDark: boolean;
+  email: string;
+  upvotes: number;
+};
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
