@@ -1,9 +1,5 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { useState } from 'react';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,15 +9,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './screens/Home';
 import Login from './screens/Login';
 import Register from './screens/Register';
-import AddReview from './screens/AddReview';
 import Profile from './screens/Profile';
 import ViewParks from './screens/ViewParks';
-import { FIREBASE_AUTH } from './FirebaseConfig';
 import { colors } from './styles/colors';
 import ParkInfo from './screens/ParkInfo';
 import RideInfo from './screens/RideInfo';
 import MyReviews from './screens/MyReviews';
-import { Timestamp } from 'firebase/firestore';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -38,7 +31,7 @@ export type Park = {
   image: string;
   location: string[];
   name: string;
-}
+};
 
 export type Ride = {
   id: string;
@@ -48,7 +41,7 @@ export type Ride = {
   video: string;
   rideID: string;
   rating: string;
-}
+};
 
 export type Review = {
   username: string;
@@ -85,7 +78,7 @@ function TabBar() {
   return (
     <Tab.Navigator
       initialRouteName='Home'
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         tabBarActiveTintColor: colors.tabBarActiveTintColor,
         tabBarInactiveTintColor: colors.tabBarInactiveTintColor,
         tabBarLabelStyle: { fontSize: 12 },
@@ -133,21 +126,11 @@ function TabBar() {
           headerShown: false,
         }}
       />
-      {/*  */}
-
     </Tab.Navigator>
   );
 }
 
 export default function App() {
-  const [user, setUser] = useState<User | null>(null);
-
-  React.useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      // console.log(user?.email);
-    });
-  }, []);
-
   //Main Stack Navigator
   return (
     <RootSiblingParent>
