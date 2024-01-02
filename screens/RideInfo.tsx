@@ -190,14 +190,13 @@ const RideInfo = ({ route }: RideInfoProps) => {
           <View key={review.id} style={reviewStyles.reviewBox}>
             <View style={reviewStyles.wide}>
               <View style={reviewStyles.vertLeft}>
-                <Text style={viewParks.title}>{review.rideName}</Text>
-                <Text style={reviewStyles.text}>{review.parkID}</Text>
+                <Text style={viewParks.title}>{review.username}</Text>
+                <Text style={reviewStyles.text}>Rating: {review.rating}</Text>
               </View>
               <View style={reviewStyles.vertRight}>
                 <Text style={reviewStyles.text}>
                   {new Date(review.date).toLocaleDateString()}
                 </Text>
-                <Text style={reviewStyles.text}>Rating: {review.rating}</Text>
               </View>
             </View>
             <View style={reviewStyles.textContainer}>

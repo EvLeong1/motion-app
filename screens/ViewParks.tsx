@@ -126,7 +126,7 @@ const ViewParks = () => {
                 onPress={() => handleParkBoxClick(park)}
               >
                 <Image source={{ uri: park.image }} style={viewParks.image} />
-                <View style={viewParks.textContainer}>
+                <View style={viewParks.textContainer} >
                   <Text style={viewParks.title}>{park.name}</Text>
                   <Text style={viewParks.location}>
                     {park.location[2]}, {park.location[1]}, {park.location[0]}

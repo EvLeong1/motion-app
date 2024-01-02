@@ -158,13 +158,16 @@ export const viewParks = StyleSheet.create({
     display: 'flex',
     gap: 5,
     flexWrap: 'wrap',
+    flexShrink: 1
+
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
     flexWrap: 'wrap',
-    maxWidth: '99%',
+    maxWidth: '100%',
+
   },
   location: {
     fontSize: 10,
