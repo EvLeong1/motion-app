@@ -11,7 +11,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { Switch, ToggleButton } from 'react-native-paper';
 import Modal from 'react-native-modal';
-import { reviewStyles, rideInfoStyles, viewParks } from '../styles/globalStyles';
+import {
+  reviewStyles,
+  rideInfoStyles,
+  viewParks,
+} from '../styles/globalStyles';
 import { Review, RootStackParamList } from '../App';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -20,13 +24,14 @@ import Toast from 'react-native-root-toast';
 import {
   addDoc,
   collection,
+  DocumentData,
   getDocs,
   onSnapshot,
   query,
   where,
 } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../FirebaseConfig';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 
 type RideInfoProps = NativeStackScreenProps<RootStackParamList, 'RideInfo'>;
 
@@ -40,9 +45,8 @@ const RideInfo = ({ route }: RideInfoProps) => {
   const [submit, setSubmit] = useState<boolean>(false);
   const [motionRating, setMotionRating] = useState('1');
   const [user, setUser] = useState<User | null>(null);
-  const [userDoc, setUserDoc] = useState<any>(null);
+  const [userDoc, setUserDoc] = useState<DocumentData | undefined>();
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -61,17 +65,14 @@ const RideInfo = ({ route }: RideInfoProps) => {
           });
 
           setReviews(tempReviews);
-          setLoading(false);
         },
         error: (error) => {
           console.log(error);
-          setLoading(false);
         },
       },
     );
     return () => unsubscribe();
   }, []);
-
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
@@ -136,8 +137,8 @@ const RideInfo = ({ route }: RideInfoProps) => {
       parkID: route.params.ride.park,
       rideID: route.params.ride.rideID,
       rideName: route.params.ride.name,
-      email: userDoc.email,
-      username: userDoc.displayName,
+      email: userDoc?.email,
+      username: userDoc?.displayName,
       date: new Date().toString(),
       text: reviewText,
       hasDrops: hasDrops,
@@ -165,46 +166,45 @@ const RideInfo = ({ route }: RideInfoProps) => {
       <Text style={rideInfoStyles.title}>{`${ride.name}`}</Text>
       <Text style={rideInfoStyles.text}>{`Dizzy Level: ${ride.rating}`}</Text>
 
-      {isVideoLoading ? (
-        <ActivityIndicator size='large' color='black' />
-      ) : (
-        <View style={rideInfoStyles.video}>
-          <YoutubePlayer
-            height={176}
-            width={320}
-            play={false}
-            videoId={ride.video}
-            onReady={() => console.log('ready')}
-          />
-        </View>
-      )}
+      {isVideoLoading
+        ? <ActivityIndicator size='large' color='black' />
+        : (
+          <View style={rideInfoStyles.video}>
+            <YoutubePlayer
+              height={176}
+              width={320}
+              play={false}
+              videoId={ride.video}
+              onReady={() => console.log('ready')}
+            />
+          </View>
+        )}
 
       <Text style={rideInfoStyles.title}>{'Reviews'}</Text>
 
       <Button title='Add Review' onPress={toggleModal} />
-      <ScrollView contentContainerStyle={viewParks.container} >
+      <ScrollView contentContainerStyle={viewParks.container}>
         {reviews.sort((a, b) => a.date.localeCompare(b.date)).map((
           review,
         ) => (
           <View key={review.id} style={reviewStyles.reviewBox}>
-          <View style={reviewStyles.wide}>
-            <View style={reviewStyles.vertLeft}>
-              <Text style={viewParks.title}>{review.rideName}</Text>
-              <Text style={reviewStyles.text}>{review.parkID}</Text>
+            <View style={reviewStyles.wide}>
+              <View style={reviewStyles.vertLeft}>
+                <Text style={viewParks.title}>{review.rideName}</Text>
+                <Text style={reviewStyles.text}>{review.parkID}</Text>
+              </View>
+              <View style={reviewStyles.vertRight}>
+                <Text style={reviewStyles.text}>
+                  {new Date(review.date).toLocaleDateString()}
+                </Text>
+                <Text style={reviewStyles.text}>Rating: {review.rating}</Text>
+              </View>
             </View>
-            <View style={reviewStyles.vertRight}>
-              <Text style={reviewStyles.text}>
-                {new Date(review.date).toLocaleDateString()}
-              </Text>
-              <Text style={reviewStyles.text}>Rating: {review.rating}</Text>
+            <View style={reviewStyles.textContainer}>
+              <Text style={reviewStyles.textContent}>{review.text}</Text>
             </View>
           </View>
-          <View style={reviewStyles.textContainer}>
-            <Text style={reviewStyles.textContent}>{review.text}</Text>
-          </View>
-        </View>
         ))}
-        
       </ScrollView>
 
       <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
@@ -213,7 +213,9 @@ const RideInfo = ({ route }: RideInfoProps) => {
           keyboardDismissMode='interactive'
           scrollEnabled={false}
         >
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+          >
             <Text style={rideInfoStyles.modalTitle}>Add Review</Text>
             <IonIcons
               name='close'
@@ -241,7 +243,11 @@ const RideInfo = ({ route }: RideInfoProps) => {
             }}
           >
             <Text style={{}}>Dark?</Text>
-            <Switch value={isDarkRide} onValueChange={setDarkRide} color='lightgreen' />
+            <Switch
+              value={isDarkRide}
+              onValueChange={setDarkRide}
+              color='lightgreen'
+            />
           </View>
 
           <View
@@ -254,7 +260,11 @@ const RideInfo = ({ route }: RideInfoProps) => {
             }}
           >
             <Text style={{}}>Drops?</Text>
-            <Switch value={hasDrops} onValueChange={setHasDrops} color='lightgreen' />
+            <Switch
+              value={hasDrops}
+              onValueChange={setHasDrops}
+              color='lightgreen'
+            />
           </View>
 
           <ToggleButton.Row
@@ -269,12 +279,18 @@ const RideInfo = ({ route }: RideInfoProps) => {
           </ToggleButton.Row>
 
           <View style={rideInfoStyles.addRevButton}>
-            <Button title='Submit Review' onPress={handleAddReview} color='white' />
+            <Button
+              title='Submit Review'
+              onPress={handleAddReview}
+              color='white'
+            />
           </View>
 
           {submit && reviewText === '' && (
             <View style={rideInfoStyles.errorBox}>
-              <Text style={rideInfoStyles.errorText}>Please enter text for your review.</Text>
+              <Text style={rideInfoStyles.errorText}>
+                Please enter text for your review.
+              </Text>
             </View>
           )}
         </ScrollView>
