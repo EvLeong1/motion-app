@@ -62,13 +62,16 @@ const ParkInfo = ({ route, navigation }: ParkInfoProps) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLargeTitle: true,
-      headerTitle: `${park.name}`,
-
       headerSearchBarOptions: {
         placeholder: 'Search',
         onChangeText: (query: any) => handleSearch(query.nativeEvent.text),
+        hideWhenScrolling: false,
       },
+      headerTitleStyle: {
+        color: 'black',
+        fontSize: 20,
+      },
+      headerTitle: park.name,
     });
   }, [navigation]);
 
