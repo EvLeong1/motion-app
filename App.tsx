@@ -22,7 +22,7 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   ParkInfo: { park: Park };
-  RideInfo: { ride: Ride };
+  RideInfo: { ride: Ride};
   MyReviews: { user: any };
 };
 
@@ -44,6 +44,7 @@ export type Ride = {
 };
 
 export type Review = {
+  id: string;
   username: string;
   parkID: string;
   rideID: string;

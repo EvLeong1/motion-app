@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Button,
@@ -9,53 +9,155 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import { Divider, RadioButton, ToggleButton } from 'react-native-paper';
+import { Switch, ToggleButton } from 'react-native-paper';
 import Modal from 'react-native-modal';
-import { rideInfoStyles } from '../styles/globalStyles';
+import { reviewStyles, rideInfoStyles, viewParks } from '../styles/globalStyles';
 import { Review, RootStackParamList } from '../App';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import IonIcons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-root-toast';
+import {
+  addDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from 'firebase/firestore';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../FirebaseConfig';
+import { User, onAuthStateChanged } from 'firebase/auth';
 
 type RideInfoProps = NativeStackScreenProps<RootStackParamList, 'RideInfo'>;
 
 const RideInfo = ({ route }: RideInfoProps) => {
   const ride = route.params.ride;
-  // TODO: Set this to true when a video is loading.
   const isVideoLoading = false;
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [reviewText, setReviewText] = useState('');
   const [isDarkRide, setDarkRide] = useState<boolean>(false);
   const [hasDrops, setHasDrops] = useState<boolean>(false);
+  const [submit, setSubmit] = useState<boolean>(false);
   const [motionRating, setMotionRating] = useState('1');
+  const [user, setUser] = useState<User | null>(null);
+  const [userDoc, setUserDoc] = useState<any>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const toggleModal = () => setModalVisible(!isModalVisible);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(
+        collection(FIREBASE_DB, 'reviews'),
+        where('rideID', '==', ride.rideID),
+      ),
+      {
+        next: (snapshot) => {
+          const tempReviews: Review[] = [];
+          snapshot.forEach((doc) => {
+            tempReviews.push({
+              ...doc.data() as Review,
+              id: doc.id,
+            });
+          });
 
-  const handleAddReview = () => {
-    // populate Review object
-    let newReview: Review = {
+          setReviews(tempReviews);
+          setLoading(false);
+        },
+        error: (error) => {
+          console.log(error);
+          setLoading(false);
+        },
+      },
+    );
+    return () => unsubscribe();
+  }, []);
+
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
+      setUser(user);
+
+      const usersDB = collection(FIREBASE_DB, 'users');
+
+      if (user) {
+        try {
+          const q = query(usersDB, where('email', '==', user.email));
+          const querySnapshot = await getDocs(q);
+
+          if (!querySnapshot.empty) {
+            const uDoc = querySnapshot.docs[0].data();
+            setUserDoc(uDoc);
+          } else {
+            console.log('User document not found');
+          }
+        } catch (error) {
+          console.error('Error retrieving user document:', error);
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const navigation = useNavigation<any>();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLargeTitle: true,
+      headerTitleStyle: {
+        color: 'black',
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+      headerTitle: ride.name,
+    });
+  }, [navigation]);
+
+  const toggleModal = () => {
+    if (user) {
+      setModalVisible(!isModalVisible);
+    } else {
+      navigation.navigate('Login');
+    }
+  };
+
+  const handleAddReview = async () => {
+    setSubmit(true);
+
+    if (motionRating == null) {
+      return;
+    }
+
+    if (reviewText === '') {
+      return;
+    }
+
+    await addDoc(collection(FIREBASE_DB, 'reviews'), {
       parkID: route.params.ride.park,
       rideID: route.params.ride.rideID,
       rideName: route.params.ride.name,
-      email: '', // do we have props for this?
-      username: '', // do we have props for this?
+      email: userDoc.email,
+      username: userDoc.displayName,
       date: new Date().toString(),
       text: reviewText,
       hasDrops: hasDrops,
       isDark: isDarkRide,
       rating: motionRating,
       upvotes: 0,
-    };
+    });
 
-    // Implement logic to save the review and its details
-    console.log('Review Text:', newReview.text);
-    console.log('Is Dark Ride:', newReview.isDark);
-    console.log('Has Drops:', newReview.hasDrops);
-    if (newReview.rating == null) {
-      return;
-    }
-    console.log('Motion Rating:', newReview.rating);
-
-    // Add logic to save the review details and close the modal
+    setSubmit(false);
     toggleModal();
+
+    Toast.show('Review added!', {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+      backgroundColor: '#76FF76',
+    });
   };
 
   return (
@@ -63,57 +165,97 @@ const RideInfo = ({ route }: RideInfoProps) => {
       <Text style={rideInfoStyles.title}>{`${ride.name}`}</Text>
       <Text style={rideInfoStyles.text}>{`Dizzy Level: ${ride.rating}`}</Text>
 
-      {isVideoLoading
-        ? <ActivityIndicator size='large' color='black' />
-        : (
-          <View style={rideInfoStyles.video}>
-            <YoutubePlayer
-              height={176}
-              width={320}
-              play={false}
-              videoId={ride.video}
-              onReady={() => console.log('ready')}
-            />
-          </View>
-        )}
+      {isVideoLoading ? (
+        <ActivityIndicator size='large' color='black' />
+      ) : (
+        <View style={rideInfoStyles.video}>
+          <YoutubePlayer
+            height={176}
+            width={320}
+            play={false}
+            videoId={ride.video}
+            onReady={() => console.log('ready')}
+          />
+        </View>
+      )}
 
       <Text style={rideInfoStyles.title}>{'Reviews'}</Text>
 
-      {/* Add Review Button */}
       <Button title='Add Review' onPress={toggleModal} />
+      <ScrollView contentContainerStyle={viewParks.container} >
+        {reviews.sort((a, b) => a.date.localeCompare(b.date)).map((
+          review,
+        ) => (
+          <View key={review.id} style={reviewStyles.reviewBox}>
+          <View style={reviewStyles.wide}>
+            <View style={reviewStyles.vertLeft}>
+              <Text style={viewParks.title}>{review.rideName}</Text>
+              <Text style={reviewStyles.text}>{review.parkID}</Text>
+            </View>
+            <View style={reviewStyles.vertRight}>
+              <Text style={reviewStyles.text}>
+                {new Date(review.date).toLocaleDateString()}
+              </Text>
+              <Text style={reviewStyles.text}>Rating: {review.rating}</Text>
+            </View>
+          </View>
+          <View style={reviewStyles.textContainer}>
+            <Text style={reviewStyles.textContent}>{review.text}</Text>
+          </View>
+        </View>
+        ))}
+        
+      </ScrollView>
 
-      {/* Review Form Modal */}
       <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
         <ScrollView
           contentContainerStyle={rideInfoStyles.modalContainer}
           keyboardDismissMode='interactive'
           scrollEnabled={false}
         >
-          <Text style={rideInfoStyles.modalTitle}>Add Review</Text>
-          <Divider theme={{ colors: { primary: 'green' } }} />
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={rideInfoStyles.modalTitle}>Add Review</Text>
+            <IonIcons
+              name='close'
+              size={25}
+              color='black'
+              onPress={toggleModal}
+            />
+          </View>
 
           <TextInput
             placeholder='Leave Dizzy Entry Text'
-            blurOnSubmit={true}
             multiline={true}
             value={reviewText}
             onChangeText={(text) => setReviewText(text)}
             style={rideInfoStyles.modalReview}
           />
 
-          <RadioButton.Item
-            label='Is the ride dark?'
-            value='darkRide'
-            status={isDarkRide ? 'checked' : 'unchecked'}
-            onPress={() => setDarkRide(!isDarkRide)}
-          />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              gap: 10,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{}}>Dark?</Text>
+            <Switch value={isDarkRide} onValueChange={setDarkRide} color='lightgreen' />
+          </View>
 
-          <RadioButton.Item
-            label='Does the ride have drops?'
-            value='hasDrops'
-            status={hasDrops ? 'checked' : 'unchecked'}
-            onPress={() => setHasDrops(!hasDrops)}
-          />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              gap: 10,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{}}>Drops?</Text>
+            <Switch value={hasDrops} onValueChange={setHasDrops} color='lightgreen' />
+          </View>
 
           <ToggleButton.Row
             onValueChange={(value) => setMotionRating(value || motionRating)}
@@ -125,9 +267,16 @@ const RideInfo = ({ route }: RideInfoProps) => {
             <ToggleButton icon={() => <Text>4</Text>} value='4' />
             <ToggleButton icon={() => <Text>5</Text>} value='5' />
           </ToggleButton.Row>
+
           <View style={rideInfoStyles.addRevButton}>
-            <Button title='Submit Review' onPress={handleAddReview} />
+            <Button title='Submit Review' onPress={handleAddReview} color='white' />
           </View>
+
+          {submit && reviewText === '' && (
+            <View style={rideInfoStyles.errorBox}>
+              <Text style={rideInfoStyles.errorText}>Please enter text for your review.</Text>
+            </View>
+          )}
         </ScrollView>
       </Modal>
     </SafeAreaView>

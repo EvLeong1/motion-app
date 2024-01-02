@@ -306,6 +306,21 @@ export const rideInfoStyles = StyleSheet.create({
     width: '40%',
     marginTop: 50,
   },
+  errorBox: {
+    backgroundColor: '#F95555',
+    padding: 5,
+    borderRadius: 10,
+    width: '60%',
+    marginTop: 20,
+  },
+  errorText: {
+    color: 'white',
+    fontStyle: 'italic',
+    // marginBottom: 10,
+    // marginTop: 6,
+    textAlign: 'center',
+  },
+  
 });
 
 export const reviewStyles = StyleSheet.create({

@@ -35,6 +35,7 @@ const MyReviews = ({ route }: MyReviewsProps) => {
           snapshot.forEach((doc) => {
             tempReviews.push({
               ...doc.data() as Review,
+              id: doc.id,
             });
           });
 
@@ -61,7 +62,7 @@ const MyReviews = ({ route }: MyReviewsProps) => {
         // Also, we can add more content like a hyperlink to the actual
         // ride's page and/or an image, but I just went with the basics for now
 
-        <View key={review.rideID} style={reviewStyles.reviewBox}>
+        <View key={review.id} style={reviewStyles.reviewBox}>
           <View style={reviewStyles.wide}>
             <View style={reviewStyles.vertLeft}>
               <Text style={viewParks.title}>{review.rideName}</Text>

@@ -44,7 +44,9 @@ const Login = ({ navigation }: Props) => {
       });
 
       // Navigate to the home screen
-      navigation.navigate('Home');
+      // navigation.navigate('Home');
+      navigation.goBack();
+
     } catch (error: any) {
       let errorMessage = 'An error occurred during login.';
       if (

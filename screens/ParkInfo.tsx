@@ -76,8 +76,8 @@ const ParkInfo = ({ route, navigation }: ParkInfoProps) => {
   }, [navigation]);
 
   function handleRideBoxClick(ride: Ride): void {
-    console.log('Ride box clicked!');
-    navigation.navigate('RideInfo', { ride: ride });
+    // console.log('Ride box clicked!');
+    navigation.navigate('RideInfo', { ride: ride});
   }
 
   return (

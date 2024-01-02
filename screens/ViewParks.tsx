@@ -44,8 +44,6 @@ const ViewParks = () => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      // headerShown:false,
-      // headerLargeTitle: true,
       headerSearchBarOptions: {
         placeholder: 'Search',
         onChangeText: (query: any) => handleSearch(query.nativeEvent.text),
@@ -56,14 +54,6 @@ const ViewParks = () => {
         fontSize: 20,
       },
       headerTitle: 'All Parks',
-      
-      // headerLargeStyle: {
-      //   backgroundColor: 'black',
-      // },
-      // statusBarStyle: 'dark',
-      // headerStyle: {
-      //   height: 200, // Set the height you desire for the large header
-      // },
     });
   }, [navigation]);
 
