@@ -41,6 +41,7 @@ export type Ride = {
   video: string;
   rideID: string;
   rating: string;
+  numReviews: number;
 };
 
 export type Review = {
