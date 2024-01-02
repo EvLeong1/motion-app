@@ -1,14 +1,21 @@
-import { View, Text, Button, Image, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { User, onAuthStateChanged, signOut } from 'firebase/auth';
+import {
+  ActivityIndicator,
+  Button,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../FirebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { ViewProfile, globalStyles } from '../styles/globalStyles';
+import { globalStyles, ViewProfile } from '../styles/globalStyles';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Profile = ({ navigation }: { navigation: any }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [photoURL, setPhotoURL] = useState<string | null>(null);
   const [userDoc, setUserDoc] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +24,6 @@ const Profile = ({ navigation }: { navigation: any }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
       setUser(user);
-      setPhotoURL(user?.photoURL || null);
 
       // Check if the user is logged in
       if (user) {
@@ -58,15 +64,11 @@ const Profile = ({ navigation }: { navigation: any }) => {
     console.log(userDoc);
   };
 
-  const loadUser = async () => {
-    console.log("in load: "+userDoc);
-  }
-
   if (loading) {
     // Display a loading indicator while the data is being fetched
     return (
       <View style={ViewProfile.container}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size='large' color='black' />
       </View>
     );
   }
@@ -74,48 +76,77 @@ const Profile = ({ navigation }: { navigation: any }) => {
   return (
     <ScrollView>
       <View style={ViewProfile.container}>
-        {user ? (
-          // If the user is logged in, display the following
-          <View style={ViewProfile.profileContainer}>
-            {user.photoURL ? (
-              <Image source={{ uri: user.photoURL }} style={ViewProfile.photo} />
-            ) : (
-              <TouchableOpacity onPress={handleAddPhotoPress} style={ViewProfile.addPhotoButton}>
-                <MaterialIcons name="add-photo-alternate" size={50} color="black" />
-              </TouchableOpacity>
-            )}
-            <View style={ViewProfile.boxContainer}>
-              <Text style={ViewProfile.descriptor}>Username</Text>
-              <Text style={ViewProfile.text}>{user.displayName}</Text>
-            </View>
-            <View style={ViewProfile.boxContainer}>
-              <Text style={ViewProfile.descriptor}>Email</Text>
-              <Text style={ViewProfile.text}>{user.email}</Text>
-            </View>
-            <View style={ViewProfile.boxContainer}>
-              <Text style={ViewProfile.descriptor}>Dizzy Bio</Text>
-              <Text style={ViewProfile.text}>{userDoc?.bio}</Text>
-            </View>
-            <View style={ViewProfile.boxContainer}>
-              <Text style={ViewProfile.descriptor}>Rating</Text>
-              <Text style={ViewProfile.text}>{userDoc?.rating}</Text>
-            </View>
+        {user
+          ? (
+            // If the user is logged in, display the following
+            <View style={ViewProfile.profileContainer}>
+              {user.photoURL
+                ? (
+                  <Image
+                    source={{ uri: user.photoURL }}
+                    style={ViewProfile.photo}
+                  />
+                )
+                : (
+                  <TouchableOpacity
+                    onPress={handleAddPhotoPress}
+                    style={ViewProfile.addPhotoButton}
+                  >
+                    <MaterialIcons
+                      name='add-photo-alternate'
+                      size={50}
+                      color='black'
+                    />
+                  </TouchableOpacity>
+                )}
+              <View style={ViewProfile.boxContainer}>
+                <Text style={ViewProfile.descriptor}>Username</Text>
+                <Text style={ViewProfile.text}>{user.displayName}</Text>
+              </View>
+              <View style={ViewProfile.boxContainer}>
+                <Text style={ViewProfile.descriptor}>Email</Text>
+                <Text style={ViewProfile.text}>{user.email}</Text>
+              </View>
+              <View style={ViewProfile.boxContainer}>
+                <Text style={ViewProfile.descriptor}>Dizzy Bio</Text>
+                <Text style={ViewProfile.text}>{userDoc?.bio}</Text>
+              </View>
+              <View style={ViewProfile.boxContainer}>
+                <Text style={ViewProfile.descriptor}>Rating</Text>
+                <Text style={ViewProfile.text}>{userDoc?.rating}</Text>
+              </View>
 
-            <View style={globalStyles.button}>
-              <Button color="white" title="My Reviews" onPress={() => navigation.navigate('MyReviews', { user: userDoc })} />
-            </View>
+              <View style={globalStyles.button}>
+                <Button
+                  color='white'
+                  title='My Reviews'
+                  onPress={() =>
+                    navigation.navigate('MyReviews', { user: userDoc })}
+                />
+              </View>
 
-            <View style={{ borderColor:'#ccc', borderWidth:1, borderRadius: 20, padding:5 }}>
-              <Button title="Sign Out" onPress={SignOut} />
+              <View
+                style={{
+                  borderColor: '#ccc',
+                  borderWidth: 1,
+                  borderRadius: 20,
+                  padding: 5,
+                }}
+              >
+                <Button title='Sign Out' onPress={SignOut} />
+              </View>
             </View>
-          </View>
-        ) : (
-          // If the user is not logged in, display the following
-          <View style={ViewProfile.signInContainer}>
-            <Text>Please sign in to view your profile</Text>
-            <Button title="Sign In" onPress={() => navigation.navigate('Login')} />
-          </View>
-        )}
+          )
+          : (
+            // If the user is not logged in, display the following
+            <View style={ViewProfile.signInContainer}>
+              <Text>Please sign in to view your profile</Text>
+              <Button
+                title='Sign In'
+                onPress={() => navigation.navigate('Login')}
+              />
+            </View>
+          )}
       </View>
     </ScrollView>
   );
