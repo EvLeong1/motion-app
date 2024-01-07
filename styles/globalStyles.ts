@@ -134,8 +134,8 @@ export const viewParks = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop: 20,
-    gap: 20,
+    // marginTop: 20,
+    // gap: 20,
     paddingBottom: 100,
   },
   loadingContainer: {
@@ -146,15 +146,18 @@ export const viewParks = StyleSheet.create({
   parkBox: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 10,
     borderColor: 'darkgray',
-    borderWidth: 1,
-    borderRadius: 20,
-    width: '95%',
-    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    // borderRadius: 20,
+    width: '100%',
+    // backgroundColor: 'white',
     gap: 15,
   },
+ 
   textContainer: {
+    width: '100%',
     display: 'flex',
     gap: 5,
     flexWrap: 'wrap',
@@ -163,7 +166,6 @@ export const viewParks = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
     color: 'black',
     flexWrap: 'wrap',
     maxWidth: '100%',
@@ -175,11 +177,11 @@ export const viewParks = StyleSheet.create({
     color: 'black',
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     borderRadius: 20,
-    borderColor: 'black',
-    borderWidth: 1,
+    borderColor: 'gray',
+    borderWidth: 0.5,
   },
 });
 

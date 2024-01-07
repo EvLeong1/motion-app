@@ -10,6 +10,7 @@
     "start-server": "node server.ts"
   },
   "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-native-firebase/firestore": "^18.7.3",
     "@react-navigation/bottom-tabs": "^6.5.11",

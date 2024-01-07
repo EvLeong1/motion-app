@@ -20,6 +20,8 @@ import { FIREBASE_DB } from '../FirebaseConfig';
 import { globalStyles, viewParks } from '../styles/globalStyles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Park, RootStackParamList } from '../App';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 
 const ViewParks = () => {
@@ -27,16 +29,7 @@ const ViewParks = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [parks, setParks] = useState<Park[]>([]);
-  // const [filteredParks, setFilteredParks] = useState<Park[]>([]);
-
-  // const scrollRef = useRef<ScrollView>(null);
-
-  // const onPressTouch = () => {
-  //   scrollRef.current?.scrollTo({
-  //     y: 0,
-  //     animated: true,
-  //   });
-  // }
+  const [favoriteParks, setFavoriteParks] = useState<Park[]>([]);
 
   const parksDB = collection(FIREBASE_DB, 'parks');
 
@@ -86,7 +79,6 @@ const ViewParks = () => {
 
   const handleSearch = (query: any) => {
     setSearchQuery(query);
-
   };
 
   const filteredParks = parks.filter((park) =>
@@ -98,12 +90,21 @@ const ViewParks = () => {
     navigation.navigate('ParkInfo', { park: park });
   };
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
+  const handleFavoriteClick = (park: Park) => {
+    console.log('Favorite clicked!');
+    console.log(park.name);
 
-  const handleBlur = () => {
-    setIsFocused(false);
+    // Add to favorites
+    if (!favoriteParks.includes(park)) {
+      setFavoriteParks([...favoriteParks, park]);
+    }
+    // Remove from favorites
+    else {
+      setFavoriteParks(favoriteParks.filter((p) => p !== park));
+    }
+    // console.log(favoriteParks.map((p) => p.name));
+    //save to Firebase
+    
   };
 
   return (
@@ -132,6 +133,12 @@ const ViewParks = () => {
                     {park.location[2]}, {park.location[1]}, {park.location[0]}
                   </Text>
                 </View>
+                <Icon
+                  name='star-o'
+                  size={30}
+                  color='black'
+                  onPress={() => handleFavoriteClick(park)}
+                />
               </TouchableOpacity>
             ))}
             
